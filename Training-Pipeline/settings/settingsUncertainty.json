@@ -1,0 +1,115 @@
+{
+  "performance":
+  {
+    "use_cuda": true,
+    "use_multiprocessing": false,
+    "workers": "multiprocessing.cpu_count()",
+    "distributed_augmentation": true
+  },
+  "directories":
+  {
+    "checkpoints_basedir": "checkpoints",
+    "data_basedir": "../Dataset-Pipeline/datasets"
+  },
+  "training":
+  {
+    "width": 40,
+    "height": 30,
+    "grayscale": false,
+    "predict_uncertainty": true,
+
+    "generator": "DiscreteFieldBoundaryGenerator",
+    "batch_size": 16,
+    "augmentation": true,
+
+    "model": "model1",
+    "model_args":
+    {
+      "with_dropout": false,
+      "filters": 16,
+      "name": "DeepFieldBoundary"
+    },
+    "optimizer": "nadam",
+    "loss": "combined_loss",
+    "metrics":
+    [
+      "mean_absolute_error",
+      "chi_squared"
+    ],
+    "es_patience": 5,
+    "lr_patience": 3,
+    "epochs": 50,
+
+    "dataset": "fieldboundary.hdf5",
+    "train_data":
+    [
+      "001-MZH-Foyer-Lights-On-The-Horizon/MZH-Foyer-2019-06-07-1stHalf/3-B-Team-JuliaMueller",
+      "001-MZH-Foyer-Lights-On-The-Horizon/MZH-Foyer-2019-06-07-1stHalf/4-B-Team-MarcUwe",
+      "001-MZH-Foyer-Lights-On-The-Horizon/MZH-Foyer-2019-06-07-2ndHalf/1-B-Human-Herta",
+      "001-MZH-Foyer-Lights-On-The-Horizon/MZH-Foyer-2019-06-07-2ndHalf/3-B-Human-DerPinguin",
+      "001-MZH-Foyer-Lights-On-The-Horizon/MZH-Foyer-2019-06-07-2ndHalf/5-B-Team-MarcUwe",
+
+      "002-MZH-Foyer-No-Lights-On-The-Horizon/MZH-Foyer-2019-04-26-1stHalf/1-B-Team-Krapotke",
+      "002-MZH-Foyer-No-Lights-On-The-Horizon/MZH-Foyer-2019-04-26-1stHalf/3-B-Team-MarcUwe",
+      "002-MZH-Foyer-No-Lights-On-The-Horizon/MZH-Foyer-2019-04-26-1stHalf/4-B-Team-JuliaMueller",
+      "002-MZH-Foyer-No-Lights-On-The-Horizon/MZH-Foyer-2019-06-21-1stHalf/1-B-Team-Herta",
+      "002-MZH-Foyer-No-Lights-On-The-Horizon/MZH-Foyer-2019-06-21-1stHalf/4-B-Team-MarcUwe",
+      "002-MZH-Foyer-No-Lights-On-The-Horizon/MZH-Foyer-2019-06-21-1stHalf/5-B-Team-Sarah",
+
+      "004-GW2/GW2-2019-11-22-15-57/1-B-Team-Krapotke",
+      "004-GW2/GW2-2019-11-22-15-57/3-B-Human-DerPinguin",
+      "004-GW2/GW2-2019-11-22-15-57/3-B-Team-Herta",
+      "004-GW2/GW2-2020-02-21-15-40/1-B-Human-Herta",
+      "004-GW2/GW2-2020-02-21-15-40/3-B-Team-DerPinguin",
+      "004-GW2/GW2-2020-02-21-15-40/3-B-Team-Krapotke",
+
+      "008-RoDeo-2020/RoDeo_Nao-Devils-Dortmund_1stHalf/1-JuliaMueller",
+      "008-RoDeo-2020/RoDeo_Nao-Devils-Dortmund_1stHalf/2-Krapotke",
+      "008-RoDeo-2020/RoDeo_Nao-Devils-Dortmund_1stHalf/3-Sarah",
+      "008-RoDeo-2020/RoDeo_Nao-Devils-Dortmund_1stHalf/4-OttoVon",
+      "008-RoDeo-2020/RoDeo_Nao-Devils-Dortmund_1stHalf/5-DerPinguin",
+      "008-RoDeo-2020/RoDeo_Nao-Team-HTWK_1stHalf/1-DerPinguin",
+      "008-RoDeo-2020/RoDeo_Nao-Team-HTWK_1stHalf/4-JuliaMueller",
+      "008-RoDeo-2020/RoDeo_Nao-Team-HTWK_1stHalf/5-Krapotke",
+
+      "009-RoHow-2019/RoHOW_Nao-Team-HTWK_1stHalf/1-DasKaenguru",
+      "009-RoHow-2019/RoHOW_Nao-Team-HTWK_1stHalf/3-Herta",
+      "009-RoHow-2019/RoHOW_Nao-Team-HTWK_1stHalf/4-JuliaMueller",
+      "009-RoHow-2019/RoHOW__HULKs_1stHalf/1-DasKaenguru",
+      "009-RoHow-2019/RoHOW__HULKs_1stHalf/3-Herta",
+      "009-RoHow-2019/RoHOW__HULKs_1stHalf/5-JuliaMueller",
+
+      "010-German-Open-2019/GermanOpen_Nao-Team-HTWK_1stHalf/1-DasKaenguru",
+      "010-German-Open-2019/GermanOpen_Nao-Team-HTWK_1stHalf/2-MarcUwe",
+      "010-German-Open-2019/GermanOpen_Nao-Team-HTWK_1stHalf/4-Sarah",
+      "010-German-Open-2019/GermanOpen_Nao-Team-HTWK_2ndHalf/1-DerPinguin",
+      "010-German-Open-2019/GermanOpen_Nao-Team-HTWK_2ndHalf/2-MarcUwe",
+      "010-German-Open-2019/GermanOpen_Nao-Team-HTWK_2ndHalf/5-DasKaenguru",
+
+      "011-RoboCup-2019-Indoor/Sydney_Indoor_Nao-Team-HTWK_1stHalf/1-Sarah",
+      "011-RoboCup-2019-Indoor/Sydney_Indoor_Nao-Team-HTWK_1stHalf/4-MarcUwe",
+      "011-RoboCup-2019-Indoor/Sydney_Indoor_Nao-Team-HTWK_1stHalf/5-OttoVon",
+      "011-RoboCup-2019-Indoor/Sydney_Indoor_Nao-Team-HTWK_2ndtHalf/1-Herta",
+      "011-RoboCup-2019-Indoor/Sydney_Indoor_Nao-Team-HTWK_2ndtHalf/2-Sarah",
+      "011-RoboCup-2019-Indoor/Sydney_Indoor_Nao-Team-HTWK_2ndtHalf/3-ElseKling",
+
+      "012-RoboCup-2019-Outdoor-Field-1/SydneyOutdoor_Bembelbots_1stHalf/1-JuliaMueller",
+      "012-RoboCup-2019-Outdoor-Field-1/SydneyOutdoor_Bembelbots_1stHalf/4-Sarah",
+      "012-RoboCup-2019-Outdoor-Field-1/SydneyOutdoor_Bembelbots_1stHalf/5-Herta",
+      "012-RoboCup-2019-Outdoor-Field-1/SydneyOutdoor_Bembelbots_2ndHalf/1-JuliaMueller",
+      "012-RoboCup-2019-Outdoor-Field-1/SydneyOutdoor_Bembelbots_2ndHalf/2-Krapotke",
+      "012-RoboCup-2019-Outdoor-Field-1/SydneyOutdoor_Bembelbots_2ndHalf/4-Sarah",
+
+      "102-UERoboCup-Colored-Background"
+    ],
+    "val_data":
+    [
+      "013-RoboCup-2019-Outdoor-Field-2/SydneyOutdoor_rUNSWift_1stHalf/1-Sarah",
+      "013-RoboCup-2019-Outdoor-Field-2/SydneyOutdoor_rUNSWift_1stHalf/2-Herta",
+      "013-RoboCup-2019-Outdoor-Field-2/SydneyOutdoor_rUNSWift_1stHalf/4-MarcUwe",
+      "013-RoboCup-2019-Outdoor-Field-2/SydneyOutdoor_rUNSWift_2ndHalf/1-Herta",
+      "013-RoboCup-2019-Outdoor-Field-2/SydneyOutdoor_rUNSWift_2ndHalf/2-Sarah",
+      "013-RoboCup-2019-Outdoor-Field-2/SydneyOutdoor_rUNSWift_2ndHalf/4-JuliaMueller"
+    ]
+  }
+}
