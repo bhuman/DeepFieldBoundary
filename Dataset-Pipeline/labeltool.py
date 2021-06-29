@@ -78,7 +78,7 @@ class LabelApplication(tk.Frame):
         self.master.bind('f', lambda event: self.set_label((0, -1, -1, 0)))
         self.master.bind('v', lambda event: self.set_label((1, -1, -1, 1)))
         self.master.bind('e', lambda event: self.exclude_image())
-        self.master.bind('h', lambda event: self.toggle_progress)
+        self.master.bind('h', lambda event: self.toggle_progress())
 
         # Load data.
         self.directory = directory
@@ -197,7 +197,6 @@ class LabelApplication(tk.Frame):
 
         self.CANVAS_WIDTH = event.width
         self.CANVAS_HEIGHT = event.height
-        self.master.config(width=self.CANVAS_WIDTH, height=self.CANVAS_HEIGHT)
         self.image_canvas.config(width=self.CANVAS_WIDTH, height=self.CANVAS_HEIGHT)
 
         self.current_image = ImageTk.PhotoImage(self.current_image_original.resize((self.CANVAS_WIDTH, self.CANVAS_HEIGHT)))

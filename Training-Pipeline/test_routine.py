@@ -78,10 +78,9 @@ if __name__ == '__main__':
             axes.lines = []
             ax_img.set_data(img)
             label_utils.draw_label(axes, img, label_utils.get_column_wise_y(label, img.shape[1]))
-            if len(prediction.shape) > 1:
-                spots = np.concatenate([np.linspace(0, 1, num=len(prediction))[:, np.newaxis], prediction], axis=1)
-                line_model = fitting.fit_model(spots, step=1)
-                label_utils.draw_label(axes, img, label_utils.get_column_wise_y(line_model, img.shape[1]), color='b')
+            spots = np.concatenate([np.linspace(0, 1, num=len(prediction))[:, np.newaxis], prediction if len(prediction.shape) > 1 else prediction[:, np.newaxis]], axis=1)
+            line_model = fitting.fit_model(spots, step=1)
+            label_utils.draw_label(axes, img, label_utils.get_column_wise_y(line_model, img.shape[1]), color='b')
             label_utils.draw_prediction(axes, img, prediction)
 
         fig.canvas.draw()

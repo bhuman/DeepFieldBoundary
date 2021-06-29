@@ -35,15 +35,28 @@ def evaluate_checkpoint(checkpoint_path):
     y_true = np.asarray([[label_utils.get_field_boundary_y(sample['label'], (0.5 + j) / img_generator.width) for j in
                           range(img_generator.width)] for sample in img_generator.samples])
 
-    predictions = np.atleast_3d(model.predict(img_generator, verbose=1))
+    predictions = model.predict(img_generator, verbose=1)
+    has_uncertainty = len(predictions.shape) > 2
+    predictions = np.atleast_3d(predictions)
+
     fitted_predictions = []
+    fitted_predictions_unit_weight = []
     for pred in predictions:
-        fitted_model = fitting.fit_model(np.concatenate([np.linspace(0, 1, num=len(pred))[:, np.newaxis], pred], axis=1), step=1)
+        spots = np.concatenate([np.linspace(0, 1, num=len(pred))[:, np.newaxis], pred], axis=1)
+        fitted_model = fitting.fit_model(spots, step=1)
         fitted_predictions.append([label_utils.get_field_boundary_y(fitted_model, (0.5 + j) / img_generator.width) for j in range(img_generator.width)])
+        if has_uncertainty:
+            spots = np.concatenate([np.linspace(0, 1, num=len(pred))[:, np.newaxis], pred[:, :1]], axis=1)
+            fitted_model = fitting.fit_model(spots, step=1)
+            fitted_predictions_unit_weight.append([label_utils.get_field_boundary_y(fitted_model, (0.5 + j) / img_generator.width) for j in range(img_generator.width)])
     fitted_predictions = np.asarray(fitted_predictions)
+    if has_uncertainty:
+        fitted_predictions_unit_weight = np.asarray(fitted_predictions_unit_weight)
 
     print(f'MAE: {mean_absolute_error(y_true, predictions[..., 0])}')
     print(f'MAE fitted: {mean_absolute_error(y_true, fitted_predictions)}')
+    if has_uncertainty:
+        print(f'MAE fitted with unit weights: {mean_absolute_error(y_true, fitted_predictions_unit_weight)}')
 
 
 if __name__ == '__main__':
