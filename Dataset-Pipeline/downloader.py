@@ -3,7 +3,6 @@ import requests
 import sys
 
 from bs4 import BeautifulSoup
-from pathlib import Path
 from tqdm import tqdm
 
 base_link = 'https://sibylle.informatik.uni-bremen.de/public/datasets/fieldboundary'
@@ -22,14 +21,14 @@ def download(filepath, url):
 
 
 if __name__ == '__main__':
-    Path('datasets/Locations').mkdir(parents=True, exist_ok=True)
+    os.makedirs(os.path.join(os.path.dirname(__file__), 'datasets', 'Locations'), exist_ok=True)
 
-    download(f'datasets/readme.txt', f'{base_link}/readme.txt')
-    download(f'datasets/labels-as-csv.zip', f'{base_link}/labels-as-csv.zip')
-    download(f'datasets/fieldboundary.hdf5', f'{base_link}/fieldboundary.hdf5')
+    download(os.path.join(os.path.dirname(__file__), 'datasets', 'readme.txt'), f'{base_link}/readme.txt')
+    download(os.path.join(os.path.dirname(__file__), 'datasets', 'labels-as-csv.zip'), f'{base_link}/labels-as-csv.zip')
+    download(os.path.join(os.path.dirname(__file__), 'datasets', 'fieldboundary.hdf5'), f'{base_link}/fieldboundary.hdf5')
 
     soup = BeautifulSoup(requests.get(f'{base_link}/Locations').text, features='html.parser')
     for link in soup.select("a[href$='.hdf5']"):
         link_ = link.get('href')
-        if not os.path.isfile(f'datasets/Locations/{link_}'):
-            download(f'datasets/Locations/{link_}', f'{base_link}/Locations/{link_}')
+        if not os.path.isfile(os.path.join(os.path.dirname(__file__), 'datasets', 'Locations', link_)):
+            download(os.path.join(os.path.dirname(__file__), 'datasets', 'Locations', link_), f'{base_link}/Locations/{link_}')

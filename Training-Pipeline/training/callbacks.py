@@ -4,6 +4,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
+import os
 import pickle
 import tensorflow as tf
 import tensorflow.keras as keras
@@ -20,7 +21,7 @@ class CustomModelCheckpoint(keras.callbacks.Callback):
         self.best_val_loss = np.finfo(np.float).max
 
         # Create model save directory in case it got deleted
-        self.model_dir = f"{self.checkpoint['checkpoint_dir']}/models/"
+        self.model_dir = os.path.join(os.path.dirname(__file__), "..", f"{self.checkpoint['checkpoint_dir']}", "models")
         Path(self.model_dir).mkdir(parents=True, exist_ok=True)
 
     def on_epoch_end(self, epoch, logs=None):

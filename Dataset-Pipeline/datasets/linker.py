@@ -1,20 +1,20 @@
+import os
 import sys
-sys.path.append("../../Utils")
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "..", "Utils"))
 
 import argparse
 import h5py
 import hdf5_utils
-import os
 
 from glob import glob
 
 
 def link(base_directory, dataset_name):
-    if os.path.isfile(f'{dataset_name}.hdf5'):
+    if os.path.isfile(os.path.join(os.path.dirname(__file__), f'{dataset_name}.hdf5')):
         print(f'Dataset {dataset_name} already exists...')
         return
 
-    dataset = h5py.File(f'{dataset_name}.hdf5', 'a')
+    dataset = h5py.File(os.path.join(os.path.dirname(__file__), f'{dataset_name}.hdf5'), 'a')
     for hdf5_file_path in glob(f'{base_directory}/*.hdf5'):
         hdf5_file = h5py.File(hdf5_file_path, 'r')
         hdf5_file_datasets = [dataset.rsplit('/', 1) for dataset, key in hdf5_utils.h5py_dataset_iterator(hdf5_file)]

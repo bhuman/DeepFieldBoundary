@@ -1,5 +1,6 @@
+import os
 import sys
-sys.path.append("Utils")
+sys.path.append(os.path.join(os.path.dirname(__file__), "Utils"))
 
 import cv2
 import color_conversion

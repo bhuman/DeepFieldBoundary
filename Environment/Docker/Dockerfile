@@ -1,4 +1,3 @@
-FROM ubuntu:20.04
 FROM tensorflow/tensorflow:2.4.1-gpu
 
 ENV TZ=Europe/Berlin
@@ -17,4 +16,4 @@ RUN mkdir python3.7.7 && cd python3.7.7 && \
 COPY requirements.txt .
 RUN python -m pip install --upgrade pip && python -m pip install -r requirements.txt
 
-WORKDIR workspace/NeuralNetwork/FieldBoundary
+WORKDIR workspace
