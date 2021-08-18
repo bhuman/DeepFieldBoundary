@@ -4,7 +4,7 @@ os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
 import json
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file_), "..", "Utils"))
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "Utils"))
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), "training"))
 
 from argparse import ArgumentParser
